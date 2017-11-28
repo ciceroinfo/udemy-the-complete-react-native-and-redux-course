@@ -4,12 +4,7 @@ import firebase from 'firebase';
 import { Button, Card, CardSection, Input, Spinner } from './common';
 
 class LoginForm extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { email: '', password: '', error: '', loading: false };
-  }
-
+  state = { email: '', password: '', error: '', loading: false };
 
   onButtonPress() {
     const { email, password } = this.state;
@@ -21,27 +16,22 @@ class LoginForm extends Component {
       .catch(() => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(this.onLoginSuccess.bind(this))
-          .catch(error => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                alert(errorMessage);
-
-            });
+          .catch(this.onLoginFail.bind(this));
       });
   }
 
-onLoginFail(error) {
-  this.setState({ error: error, loading: false });
-}
+  onLoginFail() {
+    this.setState({ error: 'Authentication Failed', loading: false });
+  }
 
-onLoginSuccess() {
-  this.setState({
-    email: '',
-    password: '',
-    loading: false,
-    error: ''
-  });
-}
+  onLoginSuccess() {
+    this.setState({
+      email: '',
+      password: '',
+      loading: false,
+      error: ''
+    });
+  }
 
   renderButton() {
     if (this.state.loading) {
@@ -49,7 +39,9 @@ onLoginSuccess() {
     }
 
     return (
-      <Button onPress={this.onButtonPress.bind(this)}>Log In</Button>
+      <Button onPress={this.onButtonPress.bind(this)}>
+        Log in
+      </Button>
     );
   }
 
@@ -59,7 +51,7 @@ onLoginSuccess() {
         <CardSection>
           <Input
             placeholder="user@gmail.com"
-            label="E-mail"
+            label="Email"
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
           />
@@ -88,11 +80,11 @@ onLoginSuccess() {
 }
 
 const styles = {
-    errorTextStyle: {
-      fontSize: 20,
-      alignSelf: 'center',
-      color: 'red'
-    }
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
+  }
 };
 
 export default LoginForm;
