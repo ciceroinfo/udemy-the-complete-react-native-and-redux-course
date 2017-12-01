@@ -11,6 +11,13 @@ const RouterComponent = () => {
       <Scene key="modal" component={Modal}>
         <Scene key="root" hideNavBar>
           <Scene key="auth">
+          <Scene
+            key="employeeCreate"
+            component={EmployeeCreate}
+            title="Employee Create"
+            onLeft={() => Actions.employeeList()}
+            leftTitle="Back"
+          />
             <Scene key="login" component={LoginForm} title="Please Login" />
           </Scene>
 
@@ -25,7 +32,7 @@ const RouterComponent = () => {
             />
 
             <Scene
-              key="employeeCreate"
+              key="employeeCreate2"
               component={EmployeeCreate}
               title="Employee Create"
               onLeft={() => Actions.employeeList()}
