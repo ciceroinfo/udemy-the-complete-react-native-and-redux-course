@@ -49,5 +49,10 @@ const loginUserSuccess = (dispatch, user) => {
     payload: user
   });
 
+  if (!user.emailVerified) {
+    user.sendEmailVerification();
+    console.log('Email verification sent');
+  }
+
   Actions.main();
 };
